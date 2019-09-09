@@ -9,40 +9,22 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rB = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+      rB = GetComponent<Rigidbody>();
+      audioSource = GetComponent<AudioSource>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
-
-    }
-
-    private void ProcessInput()
-    {
         Thrust();
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward);
-            print("Rotating left");
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward);
-            print("Rotating right");
-        }
+        Rotate();
     }
-
     private void Thrust()
-    {
+    { 
         if (Input.GetKey(KeyCode.Space))
         {
             rB.AddRelativeForce(Vector3.up);
-            print("Rotating up");
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
@@ -52,5 +34,19 @@ public class Rocket : MonoBehaviour
         {
             audioSource.Stop();
         }
+    }
+
+    private void Rotate()
+    {
+        rB.freezeRotation = true;
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.forward);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(-Vector3.forward);
+        }
+        rB.freezeRotation = false; 
     }
 }
